@@ -17,7 +17,7 @@ Anatomical landmark, deep learning, geometry, image registration, micro-computed
 
 ## **Notes on Data**
 
-The micro-computed tomography imaging data are not currently available due to ongoing projects. However, if you are interested in our adult mouse skull atlases/landmarks, please 
+The micro-computed tomography imaging data are not currently available due to ongoing projects. However, if you are interested in our adult mouse skull atlases and landmarks, please contact us here.
 
 ## **Authors**
 
