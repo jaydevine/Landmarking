@@ -25,7 +25,7 @@ Jay Devine, Jose D. Aponte, David C. Katz, Wei Liu, Lucas D. Lo Vercio, Nils D. 
 
 ## **License**
 
-This project is licensed under the GNU General Public License. See the [LICENSE file](Automated_Landmarking/LICENSE.md) for details.
+This project is licensed under the GNU General Public License. See the [LICENSE file](/jaydevine/Automated_Landmarking/LICENSE.md) for details.
 
 ## **Acknowledgments**
 
