@@ -29,4 +29,4 @@ This project is licensed under the GNU General Public License. See the [LICENSE 
 
 ## **Acknowledgments**
 
-This study was motivated by the automated landmarking code and results of [Percival et al. (2019)](https://onlinelibrary.wiley.com/doi/10.1111/joa.12973).
+This study was motivated by the automated landmarking code and results of [Percival et al. (2019)](https://onlinelibrary.wiley.com/doi/10.1111/joa.12973). We thank our funding sources (NIH, NSERC, CIHR, CFI) for their support. We also thank [Dmitri Rozmanov](https://www.ucalgary.ca/tieleman/people/dmitri-rozmanov) and [Doug Phillips](https://people.ucalgary.ca/~phillips/) for assisting with computations performed on the Helix and ARC compute clusters at the University of Calgary.
