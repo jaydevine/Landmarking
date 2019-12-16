@@ -15,6 +15,8 @@ setwd("/path/to/landmarks/")
 Test_LMs <- readland.nts("Test_Landmarks.dta")
 Test_LMs_GPA <- gpagen(Test_LMs)
 Test_LMs <- Test_LMs_GPA$coords
+# Remember to extract centroid size from this original superimposition if you want size data.
+# Note that automated-manual centroid size correlations are high both pre- and post-optimization.
 Test_LMs_CS <- Test_LMs_GPA$Csize
 
 # Original test set index used for subsetting training/testing datasets.
