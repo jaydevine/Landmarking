@@ -116,7 +116,7 @@ bend = zeros(218)
       ref = convert(Array{Float64,2}, reshape(collect(y)[:,i], 204, 1))
       ref2 = Flux.chunk(ref, 68)
       ref3 = convert(Array{Float64,2}, permutedims(reshape(hcat(ref2...), (length(ref2[1]), length(ref2)))))
-	  # We tested different stiffness coefficients -- 0.001 worked best.
+      # We tested different stiffness coefficients -- 0.001 worked best.
       tps = tps_solve(tar3, ref3, 0.001)
       metric = tps_energy(tps)
       bend[i] = metric
