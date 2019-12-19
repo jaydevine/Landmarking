@@ -15,16 +15,12 @@ using Plots
 #using CUDAnative# If you want to use the GPU.
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 # Some important notes:
-
 # 1) You need to perform a single GPA on the registration derived landmarks (e.g., using geomorph in R),
 # then export the Procrustes shape coordinates for import into Julia.
-
 # 2) If you want to retain size information, extract the centroid size vector from the original GPA.
-
 # 3) Because you've trained (or will be training) your network on a certain set of configurations, future work
 # will require you to project the registration derived landmarks into this training shape space. Our script
 # Training_Projection.R will show you how to do this.
-
 # 4) Let's assume you have all of your data in /path/to/landmarks/.
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 # Read in datasets.
