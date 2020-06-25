@@ -1,6 +1,6 @@
 # **A Registration and Deep Learning Approach to Automated Landmark Detection for GM**
 
-This repository contains a) Python/Bash scripts for atlas construction and pairwise volumetric image registration, b) Procrustes landmark coordinate data for training and testing (with an example .dta file), c) a Julia script to implement the DNN, and d) an R script to project newly acquired shape data into your training space for optimization.  
+This repository contains a) Python/Bash scripts for atlas construction and pairwise volumetric image registration, b) an R script to GPA and project newly acquired shape data into your training space for optimization, c) Procrustes landmark coordinate data for training and testing (with an example .dta file), and d) a Julia script to implement the network.
 
 ## **Keywords**
 
