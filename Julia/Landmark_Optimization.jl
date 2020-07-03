@@ -4,7 +4,7 @@
 # Import packages.
 using Pkg
 using CSV
-using Flux # Install Flux v0.9.0 via Pkg.add(name="Flux", version="0.9.0").
+using Flux # Install Flux v0.9.0 via Pkg.add(Pkg.PackageSpec(;name="Flux", version="0.9.0")).
 using Flux: @epochs
 using LinearAlgebra
 using StatsBase
