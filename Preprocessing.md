@@ -15,7 +15,7 @@ $ mkdir -p \<PROJECT\>/{Scripts,Source/{aim,Blurred,MNC,Orig,Corr,Tag,Tiff,XFM},
 
 Let's place our .mnc files in <PROJECT>/Source/MNC. Now we want to render the image volumes as surfaces and *ROUGHLY* place >=4 landmarks that can be used to initialize (i.e. translate and rotate) each image into a target image space, where we have 1 to 1 voxel correspondences. An interesting way to do this is blur the image (0.3 is 300 microns, which is 10x our original resolution. This homogenizes the intensity profile), then loop through the blurred images and automatically generate a surface:
 
-$ for file in *.mnc; do base=\`basename ${file} .mnc\`; echo ${base}; mincblur -fwhm 0.3 ${file} ${base}; MEAN=$(mincstats -quiet -mean ${base}_blur.mnc); echo ${MEAN}; marching_cubes ${base}_blur.mnc ${base}.obj ${MEAN}; done
+$ for file in *.mnc; do base=`basename ${file} .mnc\`; echo ${base}; mincblur -fwhm 0.3 ${file} ${base}; MEAN=$(mincstats -quiet -mean ${base}_blur.mnc); echo ${MEAN}; marching_cubes ${base}_blur.mnc ${base}.obj ${MEAN}; done
 
 We can then "Display" the .obj surface and place our homologous markers for initialization:
 
