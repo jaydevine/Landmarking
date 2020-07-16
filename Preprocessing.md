@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------------------------------------------------
-# Preprocessing and initialization instructions for the registration and deep learning approach of Devine et al. (2020):
+# Preprocessing and initialization instructions.
 
 Citation: Devine, J., Aponte, J.D., Katz, D.C., Liu, W., Vercio, L.D.L., Forkert, N.D., Marcucio, R., Percival, C.J. and Hallgrímsson, B., 2020. A Registration and Deep Learning Approach to Automated Landmark Detection for Geometric Morphometrics. Evolutionary Biology, pp.1-14.
 
