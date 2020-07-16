@@ -1,9 +1,6 @@
-#R Function to make a .tag file that includes the landamrks of two specimens for registration purposes
-#Will read in two .tag files and combine them into a two volume .tag file
-#XFM.dir is the directory with the directory with the .tag files to combine
-#BaseSpec is the name of the specimen that all others are registered to
-#SpecName is the name of the specimen to be registered
-#We assume 3D landmarks
+# An R function that will accept two input .tag files (with >=4  init. markers) and combine them into a two volume tag file that 
+# will be converted into a rigid transformation matrix. 
+
 combo.tag=function(XFM.dir,BaseSpec,SpecName){
   Base.LMs=read.table(paste(MNC.dir,paste(BaseSpec,".tag",sep=""),sep="/"), sep=c(" ",";"), skip=4,header=FALSE,stringsAsFactors=FALSE)[,2:4]
   Spec.LMs=read.table(paste(MNC.dir,paste(SpecName,".tag",sep=""),sep="/"), sep=c(" ",";"), skip=4,header=FALSE,stringsAsFactors=FALSE)[,2:4]
@@ -23,19 +20,14 @@ combo.tag=function(XFM.dir,BaseSpec,SpecName){
   }
 }
 
-
-
 #Read in the landmark file from which tags will be created
-Source.dir="/media/bhlab/MVG/Init2/Tag/JD_Temp"
-MNC.dir="/media/bhlab/MVG/Init2/Tag/JD_Temp"
-BaseSpec="cl_awse115_pax68" # Target
-Spec.List=read.table(paste(Source.dir,"spec_list_JD_rev2.txt",sep="/"),stringsAsFactors=FALSE)  
+Source.dir="<PROJECT>/Source/"
+MNC.dir="<PROJECT>/Source/MNC"
+BaseSpec="" # Your reference specimen.
+Spec.List=read.table(paste(Source.dir,"spec_list.txt",sep="/"),stringsAsFactors=FALSE) # Your specimen list .txt file.
 setwd(MNC.dir)
 for(j in 1:nrow(Spec.List)){
   combo.tag(Source.dir,BaseSpec,Spec.List[j,1])
 }
 
-
-
-
-
+#--------
