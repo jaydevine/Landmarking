@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------------------------------------------------------------------------------
-# Julia script for landmark neural net.
+# Julia script for landmark neural net optimization.
 
-# Citation: Devine, J., Aponte, J.D., Katz, D.C., Liu, W., Vercio, L.D.L., Forkert, N.D., Marcucio, R., Percival, C.J. and Hallgrímsson, B., 2020. A Registration and Deep Learning Approach to Automated Landmark Detection for Geometric Morphometrics. Evolutionary Biology, pp.1-14.
+# Citation: Devine, J., Aponte, J.D., Katz, D.C. et al. A Registration and Deep Learning Approach to Automated Landmark Detection for Geometric Morphometrics. Evol Biol (2020). https://doi.org/10.1007/s11692-020-09508-8
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 # Import packages.
 using Pkg
