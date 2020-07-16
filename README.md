@@ -1,5 +1,7 @@
 # **A Registration and Deep Learning Approach to Automated Landmark Detection for GM**
 
+Citation: Devine, J., Aponte, J.D., Katz, D.C. et al. A Registration and Deep Learning Approach to Automated Landmark Detection for Geometric Morphometrics. Evol Biol (2020). https://doi.org/10.1007/s11692-020-09508-8
+
 This repository contains a) Python/Bash scripts for atlas construction and pairwise volumetric image registration, b) an R script to GPA and project newly acquired shape data into your training space for optimization, c) Procrustes landmark coordinate data for training and testing (with an example .dta file), and d) a Julia script to implement the network.
 
 ## **Keywords**
