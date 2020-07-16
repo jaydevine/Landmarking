@@ -3,9 +3,12 @@
 
 Citation: Devine, J., Aponte, J.D., Katz, D.C., Liu, W., Vercio, L.D.L., Forkert, N.D., Marcucio, R., Percival, C.J. and Hallgrímsson, B., 2020. A Registration and Deep Learning Approach to Automated Landmark Detection for Geometric Morphometrics. Evolutionary Biology, pp.1-14.
 
-At this point, you should have a set of volumes converted to .mnc. You can find conversion instructions here: http://bic-mni.github.io/man-pages/.
 Preprocessing and initialization can be easily performed on a local machine.
 #------------------------------------------------------------------------------------------------------------------------
+
+After downloading the MINC software, add it to your ~/.bashrc script:  
+
+`nano ~/.bashrc` # scroll to the bottom and add ". /opt/minc/1.9.17/minc-toolkit-config.sh" to call the software in every new Terminal. Ctrl+X+X to save and exit.
 
 Begin by making a directory structure. This structure is important, as you will probably want to replicate it on a 
 compute cluster for remote processing. Cd to a /local/directory/of/choice and let \<PROJECT\> be your given project name. 
@@ -14,7 +17,9 @@ compute cluster for remote processing. Cd to a /local/directory/of/choice and le
 
 `mkdir -p \<PROJECT\>/{Scripts,Source/{aim,Blurred,MNC,Orig,Corr,Tag,Tiff,XFM},lsq6/{Blurred,MNC,XFM},lsq12/{Blurred,MNC,XFM},nl/{Ana_Test,Blurred,INIT,MNC,XFM}}`
 
-Let's place our .mnc files in <PROJECT>/Source/MNC. Now we want to render the image volumes as surfaces and *ROUGHLY* place >=4 landmarks that can be used to initialize (i.e. translate and rotate) each image into a target image space, where we have 1 to 1 voxel correspondences. An interesting way to do this is blur the image (0.3 is 300 microns, which is 10x our original resolution. This homogenizes the intensity profile), then loop through the blurred images and automatically generate a surface:  
+Next we want to convert our set of image volumes to .mnc. You can find conversion commands here: http://bic-mni.github.io/man-pages/. Let's place our .mnc files in <PROJECT>/Source/MNC.  
+
+Now we want to render the image volumes as surfaces and *ROUGHLY* place >=4 landmarks that can be used to initialize (i.e. translate and rotate) each image into a target image space, where we have 1 to 1 voxel correspondences. An interesting way to do this is blur the image (0.3 is 300 microns, which is 10x our original resolution. This homogenizes the intensity profile), then loop through the blurred images and automatically generate a surface:  
 
 `for file in *.mnc; do base='basename ${file} .mnc'; echo ${base}; mincblur -fwhm 0.3 ${file} ${base}; MEAN=$(mincstats -quiet -mean ${base}_blur.mnc); echo ${MEAN}; marching_cubes ${base}_blur.mnc ${base}.obj ${MEAN}; done`
 
