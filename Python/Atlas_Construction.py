@@ -2,7 +2,8 @@
 # average. This should happen on a compute cluster using the MINC toolkit module. Note that the parameters used throughout this script have been adapted for isotropic 35 micron uCT volumes.
 # You'll need to adapt the blurring and registration values to your data.
 
-# If you use this script, please cite Percival et al.'s (2019) paper on automated landmarking and the present study.
+# Citation: Percival, C.J., Devine, J., Darwin, B.C., Liu, W., van Eede, M., Henkelman, R.M. and Hallgrimsson, B., 2019. The effect of automated landmark identification on morphometric analyses. J Anat (2019). https://doi.org/10.1111/joa.12973
+# Citation: Devine, J., Aponte, J.D., Katz, D.C. et al. A Registration and Deep Learning Approach to Automated Landmark Detection for Geometric Morphometrics. Evol Biol (2020). https://doi.org/10.1007/s11692-020-09508-8
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Import packages.
 import os
