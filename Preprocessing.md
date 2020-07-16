@@ -3,7 +3,7 @@
 
 Citation: Devine, J., Aponte, J.D., Katz, D.C., Liu, W., Vercio, L.D.L., Forkert, N.D., Marcucio, R., Percival, C.J. and Hallgrímsson, B., 2020. A Registration and Deep Learning Approach to Automated Landmark Detection for Geometric Morphometrics. Evolutionary Biology, pp.1-14.
 
-At this point, you should have a set of volumes converted to .mnc. You can find conversion instructions here: http://bic-mni.github.io/man-pages/
+At this point, you should have a set of volumes converted to .mnc. You can find conversion instructions here: http://bic-mni.github.io/man-pages/.
 Preprocessing and initialization can be easily performed on a local machine.
 #------------------------------------------------------------------------------------------------------------------------
 
