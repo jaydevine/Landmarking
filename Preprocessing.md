@@ -15,7 +15,7 @@ compute cluster for remote processing. Cd to a /local/directory/of/choice and le
 
 `cd /local/directory/of/choice`  
 
-`mkdir -p \<PROJECT\>/{Scripts,Source/{aim,Blurred,MNC,Orig,Corr,Tag,Tiff,XFM},lsq6/{Blurred,MNC,XFM},lsq12/{Blurred,MNC,XFM},nl/{Ana_Test,Blurred,INIT,MNC,XFM}}`
+`mkdir -p <PROJECT\>{Scripts,Source/{aim,Blurred,MNC,Orig,Corr,Tag,Tiff,XFM},lsq6/{Blurred,MNC,XFM},lsq12/{Blurred,MNC,XFM},nl/{Ana_Test,Blurred,INIT,MNC,XFM}}`
 
 Next we want to convert our set of image volumes to .mnc. You can find conversion commands here: http://bic-mni.github.io/man-pages/. Let's place our .mnc files in <PROJECT>/Source/MNC.  
 
@@ -35,7 +35,7 @@ Each image .tag file must now be combined with the reference image .tag file to 
 
 `sed -i 's/.mnc//g' spec_list.txt`  
 
-`mv spec_list.txt \<PROJECT\>/Source`  
+`mv spec_list.txt <PROJECT>/Source`  
 
 Use the Tag_Combine.R script (https://github.com/jaydevine/Landmarking/blob/master/R/Tag_Combine.R) to combine the initialization landmark files:
 
@@ -43,7 +43,7 @@ Use the Tag_Combine.R script (https://github.com/jaydevine/Landmarking/blob/mast
 
 Let's move our original *_landmarks.tag files to the Tag directory now. 
 
-`mv *_landmarks.tag \<PROJECT\>/Source/Tag`  
+`mv *_landmarks.tag <PROJECT>/Source/Tag`  
 
 Create rigid transformation (.xfm) files to resample the target images into the reference space: 
 
@@ -51,7 +51,7 @@ Create rigid transformation (.xfm) files to resample the target images into the 
 
 Move the two volume tag files and rename the .xfm files for simplicity:
 
-`mv *to*.tag \<PROJECT\>/Source/Tag`  
+`mv *to*.tag <PROJECT>/Source/Tag`  
 
 `for file in *.xfm; do [ -f "$file" ] || continue; mv $file ${file//Tag_ref_to_}; done` # where ref is your reference name above. 
 
@@ -81,13 +81,15 @@ We now have an atlas (or an initialized average), an atlas mask (or an initilaiz
 
 Replicate our local directory structure:
 
-`mkdir -p \<PROJECT\>/{Scripts,Source/{aim,Blurred,MNC,Orig,Corr,Tag,Tiff,XFM},lsq6/{Blurred,MNC,XFM},lsq12/{Blurred,MNC,XFM},nl/{Ana_Test,Blurred,INIT,MNC,XFM}}`  
+`mkdir -p <PROJECT>/{Scripts,Source/{aim,Blurred,MNC,Orig,Corr,Tag,Tiff,XFM},lsq6/{Blurred,MNC,XFM},lsq12/{Blurred,MNC,XFM},nl/{Ana_Test,Blurred,INIT,MNC,XFM}}`  
 
 In a separate Terminal, sftp to "put" the atlas/average, mask, and initialized .mnc files into these directories:
 
-`sftp \<USER\>@clustername`  
+`sftp <USER>@clustername`  
 
-`cd \<PROJECT\>/Source/MNC`  
+`cd <PROJECT>/Source/MNC`
+
+`lcd <PROJECT>/Source/MNC`  # Adding l before commands in sftp allows you to run stuff locally without exiting the connection.
 
 `put *.mnc`  
 
