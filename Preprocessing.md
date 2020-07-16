@@ -6,7 +6,7 @@ Citation: Devine, J., Aponte, J.D., Katz, D.C., Liu, W., Vercio, L.D.L., Forkert
 Preprocessing and initialization can be easily performed on a local machine.
 #------------------------------------------------------------------------------------------------------------------------
 
-After downloading the MINC software, add it to your ~/.bashrc script:  
+After downloading the MINC software, add it to your ~/.bashrc script (Linux) or ~/.bash_profile (Mac):  
 
 `nano ~/.bashrc` # scroll to the bottom and add ". /opt/minc/1.9.17/minc-toolkit-config.sh" to call the software in every new Terminal. Ctrl+X+X to save and exit.
 
