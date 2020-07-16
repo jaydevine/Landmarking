@@ -17,7 +17,7 @@ Let's place our .mnc files in <PROJECT>/Source/MNC. Now we want to render the im
 
 $ for file in *.mnc; do base=\`basename ${file} .mnc\`; echo ${base}; mincblur -fwhm 0.3 ${file} ${base}; MEAN=$(mincstats -quiet -mean ${base}_blur.mnc); echo ${MEAN}; marching_cubes ${base}_blur.mnc ${base}.obj ${MEAN}; done
 
-Then, we can "Display" the .obj surface and place our homologous markers for initialization:
+We can then "Display" the .obj surface and place our homologous markers for initialization:
 
 $ Display ${base}.obj # where ${base} is the specimen name above.
 
