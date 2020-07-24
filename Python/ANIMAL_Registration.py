@@ -24,7 +24,10 @@ os.chdir("/path/to/project/")
 # in the list (e.g., a space beside a name).
 All_Specimens = "/path/to/project/test_list.txt"
 
-# Define remote directories (i.e., your compute cluster paths). We use the notation below because it is commonly seen in MINC.
+# Create remote directory structure that matches your local structure. E.g.:
+# mkdir -p <PROJECT\>{Scripts,Source/{aim,Blurred,MNC,Orig,Corr,Tag,Tiff,XFM},lsq6/{Blurred,MNC,XFM},lsq12/{Blurred,MNC,XFM},nl/{Ana_Test,Blurred,INIT,MNC,XFM}}
+
+# Create and define remote directories (i.e., your compute cluster paths). We use the notation below because it is commonly seen in MINC.
 Scripts_path = "~/<PROJECT>/Scripts/"
 Source_XFM_path = "~/<PROJECT>/Source/XFM/"
 Source_MNC_path = "~/<PROJECT>/Source/MNC/"
