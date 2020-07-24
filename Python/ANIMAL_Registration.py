@@ -14,7 +14,8 @@ import csv
 # 1) Your local and remote directories should match the compute cluster paths below. Replace <PROJECT> with your project name;
 # 2) Your local specimen list must be called test_list.txt (all test specimens).
 # 3) Your landmark initialized test images MUST be called $spec.mnc, where $spec is the exact name of the specimen annotated in spec_list.txt;
-# 4) The atlas file you intend to register your test images to must be called NL_4_average.mnc and must be sftp'd into your remote ~/<PROJECT>/nl/MNC directory on the cluster.
+# 4) The atlas files you intend to register/landmark your test images with must be called NL_4_average.mnc and NL_4_average_landmarks.tag. They must be
+# sftp'd into your remote /home/$USER/<PROJECT>/nl/MNC directory on the cluster.
 # 5) The mask and initialized source images must be sftp'd into your remote ~/<PROJECT>/Source/MNC directory on the cluster.
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Define local working directory.
@@ -27,6 +28,7 @@ All_Specimens = "/path/to/project/test_list.txt"
 Scripts_path = "~/<PROJECT>/Scripts/"
 Source_XFM_path = "~/<PROJECT>/Source/XFM/"
 Source_MNC_path = "~/<PROJECT>/Source/MNC/"
+Source_Tag_path = "~/<PROJECT>/Source/Tag/"
 lsq6_Blurred_path = "~/<PROJECT>/lsq6/Blurred/"
 lsq6_XFM_path = "~/<PROJECT>/lsq6/XFM/"
 lsq6_MNC_path = "~/<PROJECT>/lsq6/MNC/"
@@ -43,26 +45,17 @@ LM_Avg = "~/<PROJECT>/Source/MNC/LM_average.mnc"
 LM_Avg_Mask = "~/<PROJECT>/Source/MNC/LM_average_mask.mnc"
 lsq6_Avg = "~/<PROJECT>/lsq6/<PROJECT>_lsq6_average.mnc"
 lsq12_Avg = "~/<PROJECT>/lsq12/<PROJECT>_lsq12_average.mnc"
-nl_1_Avg = "~/<PROJECT>/nl/MNC/NL_1_average.mnc"
-nl_2_Avg = "~/<PROJECT>/nl/MNC/NL_2_average.mnc"
-nl_3_Avg = "~/<PROJECT>/nl/MNC/NL_3_average.mnc"
 nl_4_Avg = "~/<PROJECT>/nl/MNC/NL_4_average.mnc"
+nl_4_Avg_LM = "~/<PROJECT>/nl/MNC/NL_4_average_landmarks.tag"
 
 # Define blur files without "_blur" suffix.
-LM_Avg_Mask_1400 = "~/<PROJECT>/nl/INIT/LM_average_mask_1400"
-LM_Avg_Mask_1000 = "~/<PROJECT>/nl/INIT/LM_average_mask_1000"
-LM_Avg_Mask_700 = "~/<PROJECT>/nl/INIT/LM_average_mask_700"
-LM_Avg_Mask_400 = "~/<PROJECT>/nl/INIT/LM_average_mask_400"
 LM_Avg_Mask_352 = "~/<PROJECT>/Source/MNC/LM_average_mask_352"
 LM_Avg_Mask_176 = "~/<PROJECT>/Source/MNC/LM_average_mask_176"
 LM_Avg_Mask_098 = "~/<PROJECT>/Source/MNC/LM_average_mask_098"
 LM_Avg_Mask_078 = "~/<PROJECT>/Source/MNC/LM_average_mask_078"
 LM_Avg_Mask_064 = "~/<PROJECT>/Source/MNC/LM_average_mask_064"
 LM_Avg_Mask_050 = "~/<PROJECT>/Source/MNC/LM_average_mask_050"
-nl_4_Avg_1400 = "~/<PROJECT>/nl/INIT/NL_4_average_1400"
-nl_4_Avg_1000 = "~/<PROJECT>/nl/INIT/NL_4_average_1000"
-nl_4_Avg_700 = "~/<PROJECT>/nl/INIT/NL_4_average_700"
-nl_4_Avg_400 = "~/<PROJECT>/nl/INIT/NL_4_average_400"
+lsq12_Avg_030 = "~/<PROJECT>/nl/INIT/<PROJECT>_lsq12_average_030"
 nl_4_Avg_352 = "~/<PROJECT>/lsq6/Blurred/NL_4_average_352"
 nl_4_Avg_176 = "~/<PROJECT>/lsq6/Blurred/NL_4_average_176"
 nl_4_Avg_098 = "~/<PROJECT>/lsq12/Blurred/NL_4_average_098"
@@ -71,26 +64,35 @@ nl_4_Avg_064 = "~/<PROJECT>/lsq12/Blurred/NL_4_average_064"
 nl_4_Avg_050 = "~/<PROJECT>/lsq12/Blurred/NL_4_average_050"
 
 # Define blur files with "_blur" suffix.
-LM_Avg_Mask_1400_Blur = "~/<PROJECT>/nl/INIT/LM_average_mask_1400_blur.mnc"
-LM_Avg_Mask_1000_Blur = "~/<PROJECT>/nl/INIT/LM_average_mask_1000_blur.mnc"
-LM_Avg_Mask_700_Blur = "~/<PROJECT>/nl/INIT/LM_average_mask_700_blur.mnc"
-LM_Avg_Mask_400_Blur = "~/<PROJECT>/nl/INIT/LM_average_mask_400_blur.mnc"
 LM_Avg_Mask_352_Blur = "~/<PROJECT>/Source/MNC/LM_average_mask_352_blur.mnc"
 LM_Avg_Mask_176_Blur = "~/<PROJECT>/Source/MNC/LM_average_mask_176_blur.mnc"
 LM_Avg_Mask_098_Blur = "~/<PROJECT>/Source/MNC/LM_average_mask_098_blur.mnc"
 LM_Avg_Mask_078_Blur = "~/<PROJECT>/Source/MNC/LM_average_mask_078_blur.mnc"
 LM_Avg_Mask_064_Blur = "~/<PROJECT>/Source/MNC/LM_average_mask_064_blur.mnc"
 LM_Avg_Mask_050_Blur = "~/<PROJECT>/Source/MNC/LM_average_mask_050_blur.mnc"
-nl_4_Avg_1400_Blur = "~/<PROJECT>/nl/INIT/NL_4_average_1400_blur.mnc"
-nl_4_Avg_1000_Blur = "~/<PROJECT>/nl/INIT/NL_4_average_1000_blur.mnc"
-nl_4_Avg_700_Blur = "~/<PROJECT>/nl/INIT/NL_4_average_700_blur.mnc"
-nl_4_Avg_400_Blur = "~/<PROJECT>/nl/INIT/NL_4_average_400_blur.mnc"
+lsq12_Avg_030 = "~/<PROJECT>/nl/INIT/<PROJECT>_lsq12_average_030_blur.MNC"
 nl_4_Avg_352_Blur = "~/<PROJECT>/lsq6/Blurred/NL_4_average_352_blur.mnc"
 nl_4_Avg_176_Blur = "~/<PROJECT>/lsq6/Blurred/NL_4_average_176_blur.mnc"
 nl_4_Avg_098_Blur = "~/<PROJECT>/lsq12/Blurred/NL_4_average_098_blur.mnc"
+nl_4_Avg_098_Dxyz = "~/<PROJECT>/lsq12/Blurred/NL_4_average_098_dxyz.mnc"
 nl_4_Avg_078_Blur = "~/<PROJECT>/lsq6/Blurred/NL_4_average_078_blur.mnc"
 nl_4_Avg_064_Blur = "~/<PROJECT>/lsq12/Blurred/NL_4_average_064_blur.mnc"
 nl_4_Avg_050_Blur = "~/<PROJECT>/lsq12/Blurred/NL_4_average_050_blur.mnc"
+
+# Define blur files with "dxyz" suffix.
+LM_Avg_Mask_352_Dxyz = "~/<PROJECT>/Source/MNC/LM_average_mask_352_dxyz.mnc"
+LM_Avg_Mask_176_Dxyz = "~/<PROJECT>/Source/MNC/LM_average_mask_176_dxyz.mnc"
+LM_Avg_Mask_098_Dxyz = "~/<PROJECT>/Source/MNC/LM_average_mask_098_dxyz.mnc"
+LM_Avg_Mask_078_Dxyz = "~/<PROJECT>/Source/MNC/LM_average_mask_078_dxyz.mnc"
+LM_Avg_Mask_064_Dxyz = "~/<PROJECT>/Source/MNC/LM_average_mask_064_dxyz.mnc"
+LM_Avg_Mask_050_Dxyz = "~/<PROJECT>/Source/MNC/LM_average_mask_050_dxyz.mnc"
+lsq12_Avg_030_Dxyz = "~/<PROJECT>/nl/INIT/<PROJECT>_lsq12_average_030_dxyz.mnc"
+nl_4_Avg_352_Dxyz = "~/<PROJECT>/lsq6/Blurred/NL_4_average_352_dxyz.mnc"
+nl_4_Avg_176_Dxyz = "~/<PROJECT>/lsq6/Blurred/NL_4_average_176_dxyz.mnc"
+nl_4_Avg_098_Dxyz = "~/<PROJECT>/lsq12/Blurred/NL_4_average_098_dxyz.mnc"
+nl_4_Avg_078_Dxyz = "~/<PROJECT>/lsq6/Blurred/NL_4_average_078_dxyz.mnc"
+nl_4_Avg_064_Dxyz = "~/<PROJECT>/lsq12/Blurred/NL_4_average_064_dxyz.mnc"
+nl_4_Avg_050_Dxyz = "~/<PROJECT>/lsq12/Blurred/NL_4_average_050_dxyz.mnc"
 
 # Open and read ('r') the all specimen list.
 Specimen_List=open(All_Specimens,'r')
@@ -303,8 +305,11 @@ for Element in list(range(Specimen_List_Length)):
 		nl_Test_Fourth.write(nl_4_Register_400_Blur_Begin + nl_Blurred_path + SpecID + "_400_blur.mnc " + nl_4_Avg_400_Blur + " " + nl_XFM_path + SpecID + "_nl_4.xfm -model_mask " + LM_Avg_Mask_400_Blur + " " + nl_4_Register_400_Blur_End + nl_XFM_path + SpecID + "_nl_3.xfm\n")
 		# Concatenate .xfm files.
 		nl_Test_Fourth.write("xfmconcat -clobber " + lsq6_XFM_path + SpecID + "_lsq6_2.xfm " + lsq12_XFM_path + SpecID + "_lsq12_2.xfm " + nl_XFM_path + SpecID + "_nl_4.xfm " + nl_XFM_path + SpecID + "_origtonl_4.xfm\n")
-		# Resample source image into third non-linear space with concatenated .xfm.
+		# Resample source image into fourth non-linear space with concatenated .xfm.
 		nl_Test_Fourth.write("mincresample -like " + nl_4_Avg + " -clobber -transformation " + nl_XFM_path + SpecID + "_origtonl_4.xfm " + Source_MNC_path + SpecID + ".mnc "+ nl_MNC_path + SpecID + "_nl_4.mnc\n\n")
+		nl_Test_Fourth.write("xfminvert -clobber " + nl_XFM_path + SpecID + "_origtonl_4.xfm " + nl_XFM_path + SpecID + "_origtonl_4_inverted.xfm\n")
+		# To propagate the landmarks, we invert the entire transformation, then use "transformtags" to propagate the atlas landmarks along this path. The resulting landmarks are in "/home/$USER/<PROJECT>/Source/Tag/".
+		nl_Test_Fourth.write("transformtags -vol1 -transformation " + nl_XFM_path + SpecID + "_origtonl_4_inverted.xfm " + nl_4_Avg_LM + " " + Source_Tag_path + SpecID + "_landmarks.tag\n")
 	nl_Test_Fourth.write("echo \"The job ended at $(date).\"")
 	# Close the script.
 	nl_Test_Fourth.close()
