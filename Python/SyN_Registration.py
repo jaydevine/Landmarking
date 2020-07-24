@@ -14,7 +14,8 @@ import csv
 # 1) Your local and remote directories should match the compute cluster paths below. Replace <PROJECT> with your project name;
 # 2) Your local specimen list must be called test_list.txt (all test specimens).
 # 3) Your landmark initialized test images MUST be called $spec.mnc, where $spec is the exact name of the specimen annotated in spec_list.txt;
-# 4) The atlas file you intend to register your test images to must be called NL_4_average.mnc and must be sftp'd into your remote /home/$USER/<PROJECT>/nl/MNC directory on the cluster.
+# 4) The atlas files you intend to register/landmark your test images with must be called NL_4_average.mnc and NL_4_average_landmarks.tag. They must be
+# sftp'd into your remote /home/$USER/<PROJECT>/nl/MNC directory on the cluster.
 # 5) The mask and initialized source images must be sftp'd into your remote /home/$USER/<PROJECT>/Source/MNC directory on the cluster.
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Define local working directory.
@@ -27,6 +28,7 @@ All_Specimens = "/path/to/project/test_list.txt"
 Scripts_path = "/home/$USER/<PROJECT>/Scripts/"
 Source_XFM_path = "/home/$USER/<PROJECT>/Source/XFM/"
 Source_MNC_path = "/home/$USER/<PROJECT>/Source/MNC/"
+Source_Tag_path = "/home/$USER/<PROJECT>/Source/Tag/"
 lsq6_Blurred_path = "/home/$USER/<PROJECT>/lsq6/Blurred/"
 lsq6_XFM_path = "/home/$USER/<PROJECT>/lsq6/XFM/"
 lsq6_MNC_path = "/home/$USER/<PROJECT>/lsq6/MNC/"
@@ -44,6 +46,7 @@ LM_Avg_Mask = "/home/$USER/<PROJECT>/Source/MNC/LM_average_mask.mnc"
 lsq6_Avg = "/home/$USER/<PROJECT>/lsq6/<PROJECT>_lsq6_average.mnc"
 lsq12_Avg = "/home/$USER/<PROJECT>/lsq12/<PROJECT>_lsq12_average.mnc"
 nl_4_Avg = "/home/$USER/<PROJECT>/nl/MNC/NL_4_average.mnc"
+nl_4_Avg_LM = "/home/$USER/<PROJECT>/nl/MNC/NL_4_average_landmarks.tag"
 
 # Define blur files without "_blur" suffix.
 LM_Avg_Mask_352 = "/home/$USER/<PROJECT>/Source/MNC/LM_average_mask_352"
@@ -225,6 +228,9 @@ for SpecID in Specimen_IDs:
 	nl_Test.write("ANTS 3 --number-of-affine-iterations 0 -m CC[" + lsq12_MNC_path + SpecID + "_lsq12.mnc," + nl_4_Avg + ",1.0,4] -m CC[" + nl_Blurred_path + SpecID + "_098_dxyz.mnc," + nl_4_Avg_098_Dxyz + ",1.0,4] -x [" + LM_Avg_Mask_098_Blur + "] -t SyN[0.4] -r Gauss[5,1] -i 100x100x100x0 -o " + nl_XFM_path + SpecID + "_ANTS_nl.xfm\n")
 	nl_Test.write("xfmconcat -clobber " + lsq6_XFM_path + SpecID + "_lsq6_2.xfm " + lsq12_XFM_path + SpecID + "_lsq12_2.xfm " + nl_XFM_path + SpecID + "_ANTS_nl.xfm " + nl_XFM_path + SpecID + "_origtoANTSnl.xfm\n")
 	nl_Test.write("mincresample -like " + nl_4_Avg + " -clobber -transformation " + nl_XFM_path + SpecID + "_origtoANTSnl.xfm " + Source_MNC_path + SpecID + ".mnc "+ nl_MNC_path + SpecID + "_ANTS_nl.mnc\n\n")
+	nl_Test.write("xfminvert -clobber " + nl_XFM_path + SpecID + "_origtoANTSnl.xfm " + nl_XFM_path + SpecID + "_origtoANTSnl_inverted.xfm\n")
+	# To propagate the landmarks, we invert the entire transformation, then use "transformtags" to propagate the atlas landmarks along this path. The resulting landmarks are in "/home/$USER/<PROJECT>/Source/Tag/".
+	nl_Test.write("transformtags -vol1 -transformation " + nl_XFM_path + SpecID + "_origtoANTSnl_inverted.xfm " + nl_4_Avg_LM + " " + Source_Tag_path + SpecID + "_landmarks.tag\n")
 	nl_Test.write("echo \"The job ended at $(date).\"")
 	# Close the file.
 	nl_Test.close()
