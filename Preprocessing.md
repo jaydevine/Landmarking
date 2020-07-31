@@ -3,7 +3,7 @@
 
 Citation: Devine, J., Aponte, J.D., Katz, D.C., Liu, W., Vercio, L.D.L., Forkert, N.D., Marcucio, R., Percival, C.J. and Hallgrímsson, B., 2020. A Registration and Deep Learning Approach to Automated Landmark Detection for Geometric Morphometrics. Evolutionary Biology, pp.1-14.
 
-Preprocessing and initialization can be easily performed on a local machine.
+Preprocessing and initialization can easily be performed on a local machine.
 #------------------------------------------------------------------------------------------------------------------------
 
 After downloading the MINC software, add it to your ~/.bashrc script (Linux) or ~/.bash_profile (Mac):  
