@@ -128,7 +128,7 @@ Data = [(x_Train,y_Train)]
 @epochs 10000 Flux.train!(Loss, Ps, Data, Opt)
 
 # Save the model and model weights with BSON package to avoid retraining your network.
-Weights = Tracker.data.(params(Model));
+Weights = Tracker.data.(Flux.params(Model));
 @save "Model.bson" Model # look at saving here: https://pkg.julialang.org/docs/Flux/QdkVy/0.9.0/saving/
 @save "Weights.bson" Weights
 
