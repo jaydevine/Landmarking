@@ -4,6 +4,7 @@
 Citation: Devine, J., Aponte, J.D., Katz, D.C., Liu, W., Vercio, L.D.L., Forkert, N.D., Marcucio, R., Percival, C.J. and Hallgrímsson, B., 2020. A Registration and Deep Learning Approach to Automated Landmark Detection for Geometric Morphometrics. Evolutionary Biology, pp.1-14.
 
 Preprocessing and initialization can easily be performed on a local machine.
+
 #------------------------------------------------------------------------------------------------------------------------
 
 After downloading the MINC software, add it to your ~/.bashrc script (Linux) or ~/.bash_profile (Mac):  
@@ -17,7 +18,11 @@ compute cluster for remote processing. Cd to a /local/directory/of/choice and le
 
 `mkdir -p <PROJECT\>{Scripts,Source/{aim,Blurred,MNC,Orig,Corr,Tag,Tiff,XFM},lsq6/{Blurred,MNC,XFM},lsq12/{Blurred,MNC,XFM},nl/{Ana_Test,Blurred,INIT,MNC,XFM}}`
 
-Next we want to convert our set of image volumes to .mnc. You can find conversion commands here: http://bic-mni.github.io/man-pages/. Let's place our .mnc files in <PROJECT>/Source/MNC.  
+Next we want to convert our set of image volumes to .mnc. You can find conversion commands here: http://bic-mni.github.io/man-pages/. You can also use ITK to convert, e.g., single volume .tiff files. If our resolution is 35 microns or 0.035 mm, we could try the following:
+
+`for file in *.tiff; do base='basename $file .tiff'; echo $base; itk_convert $file ${base}.mnc; minc_modify_header -dinsert xspace:step=0.035 ${base}.mnc; minc_modify_header -dinsert yspace:step=0.035 ${base}.mnc; minc_modify_header -dinsert zspace:step=0.035 ${base}.mnc; done`
+
+Let's place our .mnc files in <PROJECT>/Source/MNC.  
 
 Now we want to render the image volumes as surfaces and *ROUGHLY* place >=4 landmarks that can be used to initialize (i.e. translate and rotate) each image into a target image space, where we have 1 to 1 voxel correspondences. An interesting way to do this is blur the image (0.3 is 300 microns, which is 10x our original resolution. This homogenizes the intensity profile), then loop through the blurred images and automatically generate a surface:  
 
@@ -95,4 +100,4 @@ In a separate Terminal, sftp to "put" the atlas/average, mask, and initialized .
 
 Next, follow the Python scripts in https://github.com/jaydevine/Landmarking/tree/master/Python to produce a set of Bash (.sh) scripts that will be ran on the cluster. There are Python scripts for pairwise registration (if you've already created/have an atlas) and atlas construction. 
 
-#-------
+#------------------------------------------------------------------------------------------------------------------------
