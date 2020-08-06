@@ -11,7 +11,7 @@ After downloading the MINC software, add it to your ~/.bashrc script (Linux) or 
 
 `nano ~/.bashrc` # scroll to the bottom and add ". /opt/minc/1.9.17/minc-toolkit-config.sh" to call the software in every new Terminal. Ctrl+X+X to save and exit.
 
-Begin by making a directory structure. This structure is important, as you will probably want to replicate it on a 
+Begin by making a directory structure. This structure is important as you will probably want to replicate it on a 
 compute cluster for remote processing. Cd to a /local/directory/of/choice and let \<PROJECT\> be your given project name. 
 
 `cd /local/directory/of/choice`  
