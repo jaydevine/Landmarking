@@ -11,7 +11,7 @@ Anatomical landmark, deep learning, geometry, image registration, micro-computed
 ## **Prerequisites**
 
 1. Linux or macOS;
-2. [Medical Imaging NetCDF (MINC) Toolkit](https://github.com/BIC-MNI/minc-toolkit-v2) with local and remote (compute cluster) installations. Note that MINC is a modality neutral imaging data format and associated set of tools and libraries developed at the Montreal Neurological Institute (MNI) and freely available online. More information can be found at the [MINC Wikibooks page](http://en.wikibooks.org/wiki/MINC);
+2. [Medical Imaging NetCDF (MINC) Toolkit](https://github.com/BIC-MNI/minc-toolkit-v2) (or from their [website](https://bic-mni.github.io/)) with local and remote/compute cluster installations. Note that MINC is a modality neutral imaging data format and associated set of tools and libraries developed at the Montreal Neurological Institute (MNI) and freely available online. More information can be found at the [MINC Wikibooks page](http://en.wikibooks.org/wiki/MINC);
 3. Volumetric imaging data. Ideally the file sizes are 300 MB or less, but this is not a strict requirement;
 4. [Python](https://www.python.org/downloads/) and associated packages;
 5. [R](https://cran.r-project.org/bin/) and associated packages;
