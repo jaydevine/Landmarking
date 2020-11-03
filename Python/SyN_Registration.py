@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Python script for pairwise spatial normalization using SyN's non-linear algorithm. It will generate a series of Bash scripts that will pairwise register your images to an atlas.
-# This should happen on a compute cluster using the MINC toolkit module. Note that the parameters used throughout this script have been adapted for isotropic 35 micron uCT volumes.
+# These scripts should be submitted to a compute cluster using the MINC toolkit module, but they can also be ran locally; all you need to do is alter the paths. Note that the parameters used throughout this script have been adapted for isotropic 35 micron uCT volumes.
 # You'll need to adapt the blurring and registration values to your data.
 
 # Citation: Percival, C.J., Devine, J., Darwin, B.C., Liu, W., van Eede, M., Henkelman, R.M. and Hallgrimsson, B., 2019. The effect of automated landmark identification on morphometric analyses. J Anat (2019). https://doi.org/10.1111/joa.12973
