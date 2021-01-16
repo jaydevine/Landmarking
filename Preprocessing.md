@@ -20,13 +20,13 @@ compute cluster for remote processing. Move to a /local/directory/of/choice and 
 
 Next we want to convert our set of image volumes to .mnc. You can find conversion commands here: http://bic-mni.github.io/man-pages/. You can also use ITK to convert, e.g., single volume .tiff files. If our resolution is 35 microns or 0.035 mm, we could try the following:
 
-`for file in *.tiff; do base=\`basename $file .tiff\`; echo $base; itk_convert $file ${base}.mnc; minc_modify_header -dinsert xspace:step=0.035 ${base}.mnc; minc_modify_header -dinsert yspace:step=0.035 ${base}.mnc; minc_modify_header -dinsert zspace:step=0.035 ${base}.mnc; done`
+`for file in *.tiff; do base=$(basename $file .tiff); echo $base; itk_convert $file ${base}.mnc; minc_modify_header -dinsert xspace:step=0.035 ${base}.mnc; minc_modify_header -dinsert yspace:step=0.035 ${base}.mnc; minc_modify_header -dinsert zspace:step=0.035 ${base}.mnc; done`
 
 Let's place our .mnc files in <PROJECT>/Source/MNC.  
 
 Now we want to render the image volumes as surfaces and *ROUGHLY* place >=4 landmarks that can be used to initialize (i.e. translate and rotate) each image into a target image space, where we have 1 to 1 voxel correspondences. An interesting way to do this is blur the image (0.3 is 300 microns, which is 10x our original resolution. This homogenizes the intensity profile), then loop through the blurred images and automatically generate a surface:  
 
-`for file in *.mnc; do base=\`basename ${file} .mnc\`; echo ${base}; mincblur -fwhm 0.3 ${file} ${base}; biModalT=$(mincstats -quiet -biModalT ${base}_blur.mnc); echo ${biModalT}; marching_cubes ${base}_blur.mnc ${base}.obj ${biModalT}; done`
+`for file in *.mnc; do base=$(basename ${file} .mnc); echo ${base}; mincblur -fwhm 0.3 ${file} ${base}; biModalT=$(mincstats -quiet -biModalT ${base}_blur.mnc); echo ${biModalT}; marching_cubes ${base}_blur.mnc ${base}.obj ${biModalT}; done`
 
 We can then "Display" the .obj surface and place our homologous markers for initialization:
 
@@ -62,7 +62,7 @@ Move the two volume tag files and rename the .xfm files for simplicity:
 
 Use the .xfm matrices to resample the images. We can also include an intensity non-uniformity correction and an intensity normalization [0,1] if we want:  
 
-`for file in *.xfm; do base='basename $file .xfm'; echo $base; mincresample -like ${ref}.mnc -transformation $file ${base}.mnc ${base}_to_ref.mnc; nu_correct ${base}_to_ref.mnc ${base}_corr.mnc; mincnorm -out_floor 0 -out_ceil 1 ${base}_corr.mnc ${base}_norm.mnc; done`  
+`for file in *.xfm; do base=$(basename $file .xfm); echo $base; mincresample -like ${ref}.mnc -transformation $file ${base}.mnc ${base}_to_ref.mnc; nu_correct ${base}_to_ref.mnc ${base}_corr.mnc; mincnorm -out_floor 0 -out_ceil 1 ${base}_corr.mnc ${base}_norm.mnc; done`  
 
 After the resampling is done, clean up the directories. Move the original files to <PROJECT>/Source/Orig and the corrected *corr* files to \<PROJECT\>/Source/Corr. We want to use the *_norm.mnc images going forward. Most of the processing to come will require the original specimen names, so let's just rename:
 
