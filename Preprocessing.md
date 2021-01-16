@@ -20,7 +20,7 @@ compute cluster for remote processing. Move to a /local/directory/of/choice and 
 
 Next we want to convert our set of image volumes to .mnc. You can find conversion commands here: http://bic-mni.github.io/man-pages/. You can also use ITK to convert, e.g., single volume .tiff files. If our resolution is 35 microns or 0.035 mm, we could try the following:
 
-`for file in *.tiff; do base=$(basename $file .tiff); echo $base; itk_convert $file ${base}.mnc; minc_modify_header -dinsert xspace:step=0.035 ${base}.mnc; minc_modify_header -dinsert yspace:step=0.035 ${base}.mnc; minc_modify_header -dinsert zspace:step=0.035 ${base}.mnc; done`
+`for file in *.tiff; do base=$(basename ${file} .tiff); echo $base; itk_convert $file ${base}.mnc; minc_modify_header -dinsert xspace:step=0.035 ${base}.mnc; minc_modify_header -dinsert yspace:step=0.035 ${base}.mnc; minc_modify_header -dinsert zspace:step=0.035 ${base}.mnc; done`
 
 Let's place our .mnc files in <PROJECT>/Source/MNC.  
 
@@ -52,7 +52,7 @@ Let's move our original *_landmarks.tag files to the Tag directory now.
 
 Create rigid transformation (.xfm) files to resample the target images into the reference space: 
 
-`for file in *to*.tag; do base='basename $file .tag'; echo ${base}; tagtoxfm -lsq6 ${file} ${base}.xfm; done`  
+`for file in *to*.tag; do base=$(basename ${file} .tag); echo ${base}; tagtoxfm -lsq6 ${file} ${base}.xfm; done`  
 
 Move the two volume tag files and rename the .xfm files for simplicity:
 
