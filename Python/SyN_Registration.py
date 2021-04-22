@@ -15,7 +15,7 @@ import csv
 # 2) Your local specimen list must be called test_list.txt (all test specimens).
 # 3) Your landmark initialized test images MUST be called $spec.mnc, where $spec is the exact name of the specimen annotated in spec_list.txt;
 # 4) The atlas files you intend to register/landmark your test images with must be called NL_4_average.mnc and NL_4_average_landmarks.tag. They must be
-# sftp'd into your remote /home/$USER/<PROJECT>/nl/MNC directory on the cluster.
+# sftp'd into your remote /home/$USER/<PROJECT>/Source/MNC directory on the cluster.
 # 5) The mask and initialized source images must be sftp'd into your remote /home/$USER/<PROJECT>/Source/MNC directory on the cluster.
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Define local working directory.
@@ -46,7 +46,7 @@ nl_MNC_path = "/home/$USER/<PROJECT>/nl/MNC/"
 # Define average files.
 nl_4_Avg_Mask = "/home/$USER/<PROJECT>/Source/MNC/NL_4_average.mnc"
 nl_4_Avg = "/home/$USER/<PROJECT>/Source/MNC/NL_4_average_mask.mnc"
-nl_4_Avg_LM = "/home/$USER/<PROJECT>/nl/MNC/NL_4_average_landmarks.tag"
+nl_4_Avg_LM = "/home/$USER/<PROJECT>/Source/MNC/NL_4_average_landmarks.tag"
 
 # Define blur files without "_blur" suffix.
 nl_4_Avg_Mask_352 = "/home/$USER/<PROJECT>/Source/MNC/NL_4_average_mask_352"
