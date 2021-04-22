@@ -11,7 +11,7 @@ import os
 import csv
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Some important notes:
-# 1) Your local and remote directories should match the compute cluster paths below. Replace <PROJECT> with your project name;
+# 1) Your local and remote directories should match the paths below. Replace <PROJECT> with your project name;
 # 2) Your local specimen list must be called test_list.txt (all test specimens).
 # 3) Your landmark initialized test images MUST be called $spec.mnc, where $spec is the exact name of the specimen annotated in spec_list.txt;
 # 4) The atlas files you intend to register/landmark your test images with must be called NL_4_average.mnc and NL_4_average_landmarks.tag. They must be
