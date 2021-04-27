@@ -11,6 +11,7 @@ using Flux: @epochs
 using LinearAlgebra
 using StatsBase
 using DataFrames
+using Zygote
 using Plots
 using BSON
 using BSON: @save
@@ -33,8 +34,10 @@ using BSON: @load
 # 2. VARIABLES:
 
 # A) Read in datasets. First n rows as automated data and last n rows as manual data.
-Train = CSV.read("C:/path/to/wd/SyN_MAN_Train_Orp_Revised.csv")
-Test = CSV.read("C:/path/to/wd/SyN_Test_Orp_Revised.csv")
+Train_Data = CSV.File("C:/path/to/wd/SyN_MAN_Train_Orp_Revised.csv")
+Test_Data = CSV.File("C:/path/to/wd/SyN_Test_Orp_Revised.csv")
+Train = DataFrame(Train_Data)
+Test = DataFrame(Test_Data)
 
 # B) Split dataset up, convert to matrix, and transpose. In this example, x is a matrix of N=170 automated training examples and y is a matrix of
 # N=170 manual examples. x2 is a matrix of N=47 automated testing examples. All landmark configurations are homologous.
@@ -128,7 +131,7 @@ Data = [(x_Train,y_Train)]
 @epochs 10000 Flux.train!(Loss, Ps, Data, Opt)
 
 # Save the model and model weights with BSON package to avoid retraining your network.
-Weights = Tracker.data.(Flux.params(Model));
+Weights = params(Model);
 @save "Model.bson" Model # look at saving here: https://pkg.julialang.org/docs/Flux/QdkVy/0.9.0/saving/
 @save "Weights.bson" Weights
 
@@ -138,3 +141,7 @@ Flux.loadparams!(Model, Weights)
 
 # Evaluate the model on test data.
 #CSV.write("C:/path/to/wd/Test_Predictions.csv", DataFrame(collect(transpose(Model(x_Test)))))
+
+Preds_Data = collect(transpose(Model(x_Test)))
+Preds = DataFrame(Preds_Data)
+CSV.write("C:/path/to/wd/Test_Predictions.csv", Preds)
