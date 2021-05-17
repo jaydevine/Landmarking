@@ -132,16 +132,15 @@ Data = [(x_Train,y_Train)]
 
 # Save the model and model weights with BSON package to avoid retraining your network.
 Weights = params(Model);
-@save "Model.bson" Model # look at saving here: https://pkg.julialang.org/docs/Flux/QdkVy/0.9.0/saving/
+@save "Model.bson" Model 
 @save "Weights.bson" Weights
 
 # If you want to load the parameters back into the model to avoid retraining, define the model above and skip the training step. Then,
+@load "Model.bson" Model
 @load "Weights.bson" Weights
 Flux.loadparams!(Model, Weights)
 
 # Evaluate the model on test data.
-#CSV.write("C:/path/to/wd/Test_Predictions.csv", DataFrame(collect(transpose(Model(x_Test)))))
-
 Preds_Data = collect(transpose(Model(x_Test)))
 Preds = DataFrame(Preds_Data)
 CSV.write("C:/path/to/wd/Test_Predictions.csv", Preds)
