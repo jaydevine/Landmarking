@@ -3,6 +3,9 @@
 
 # Citation: Devine, J., Aponte, J.D., Katz, D.C. et al. A Registration and Deep Learning Approach to Automated Landmark Detection for Geometric Morphometrics. Evol Biol (2020). https://doi.org/10.1007/s11692-020-09508-8
 #-------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------
+# Julia script for landmark neural net.
+#-------------------------------------------------------------------------------------------------------------------------------------------------
 # Import packages.
 using Pkg
 using CSV
@@ -16,46 +19,49 @@ using Plots
 using BSON
 using BSON: @save
 using BSON: @load
-# using CuArrays # If you want to use the GPU instead of CPU. You'll also want CUDAnative. Note, however, that the script would need
-# to be adapted to use CUDA arrays.
-
+# using CuArrays # If you want to use the GPU instead of CPU.
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 # The only notes you need to read, and the only variables you need to alter, are between these lines.
 # 1. NOTES:
 
-# A) GPA and project your training/testing landmark data into the same space. Follow https://github.com/jaydevine/Landmarking/blob/master/R/GPA_and_Projection.R
-# for instructions on how to do this.
+# A) Follow the code in GPA_and_Projection.R. This involves performing separate GPAs on the manual and registration-derived landmarks,
+# then projecting the automated tangent space coordinates into the manual tangent space. It is very important that you remember what
+# manual configurations were used in the training set, as this will always be the mean shape on which any registration-derived
+# test set must be superimposed. Once the manual and automated configurations are in the same space, combine the
+# shape coordinates into a single dataset for import into Julia.
 
-# B) If you want to retain size information, extract the centroid size vector from the original GPA. In general, registration-based
-# size information (e.g., volumes, linear distances, centroid size) is more reliable than the shape information.
+# B) If you want to acquire size information, extract the centroid size vector from the original GPA. In general, registration-based
+# size measures (e.g., volumes, linear distances, centroid size) are highly correlated (>0.95) with manual size measures.
 
-# C) Let's assume you have all of your data in C:/path/to/wd/.
+# C) Let's assume you have all of your data in /path/to/Landmarks/.
 
 # 2. VARIABLES:
 
-# A) Read in datasets. First n rows as automated data and last n rows as manual data.
-Train_Data = CSV.File("C:/path/to/wd/SyN_MAN_Train_Orp_Revised.csv")
-Test_Data = CSV.File("C:/path/to/wd/SyN_Test_Orp_Revised.csv")
-Train = DataFrame(Train_Data)
-Test = DataFrame(Test_Data)
+# A) Read in training dataset. Let's assume the first n rows are automated data and last n rows are manual data. The header (line 1) is ignored.
+Training_Set = CSV.File("/path/to/Landmarks/<>.csv")
+Training_Set = DataFrame(Training_Set)
 
-# B) Split dataset up, convert to matrix, and transpose. In this example, x is a matrix of N=170 automated training examples and y is a matrix of
-# N=170 manual examples. x2 is a matrix of N=47 automated testing examples. All landmark configurations are homologous.
-x = Matrix(Train[1:170,2:end])'
-y = Matrix(Train[171:end,2:end])'
-x2 = Matrix(Test[1:end,2:end])'
+# B) Read in testing dataset.
+Testing_Set = CSV.File("/path/to/Landmarks/<>.csv")
+Testing_Set = DataFrame(Testing_Set)
 
-# C) Define training and testing data
-x_Train = reshape(collect(x), size(x)[1], size(x)[2])
-y_Train = reshape(collect(y), size(y)[1], size(y)[2])
-x_Test = reshape(collect(x2), size(x2)[1], size(x2)[2])
+# B) Split the datasets up, convert them to matrices, and transpose. Let's assume the first column has specimen IDs.
+x_Train = Matrix(Training_Set[1:n,2:end])'
+y_Train = Matrix(Training_Set[n+1:end,2:end])'
+x_Test = Matrix(Testing_Set[1:end,2:end])'
 
-# D) Define whether your data are in two or three (K) dimensions.
+# C) Define training and testing data arrays.
+x_Train = reshape(collect(x_Train), size(x_Train)[1], size(x_Train)[2])
+y_Train = reshape(collect(y_Train), size(y_Train)[1], size(y_Train)[2])
+x_Test = reshape(collect(x_Test), size(x_Test)[1], size(x_Test)[2])
+
+# Define whether your data are in two or three (K) dimensions.
 K = 3
-#----------------------------------------------------------------------------------------------------------------------------
+
 # Determine how many landmarks (P) there are.
 P = trunc(Int, size(x_Train)[1]/K)
 
+#----------------------------------------------------------------------------------------------------------------------------
 # Define loss functions.
 # First, we define an RMSE loss, as it improves performance over MSE alone.
 function RMSE(x,y)
@@ -104,13 +110,12 @@ function TPS_Solve(x,y,λ)
 	return mean(Bend)
 end
 
-# Define losses together: 0.001 worked best.
+# Add losses together: 0.001 regularization worked best.
 function Loss(x,y)
 	return RMSE(Model(x), y) + TPS_Solve(Model(x),y,0.001)
 end
 
-#-------------------------------------------------------------------------------------------------------------------------------------------------
-# Define the architecture. We're going to use P*K units in each layer with relative linear units as activation.
+# Define the architecture. We're going to use P*K units in each layer with rectified linear units as activation.
 # Make sure they are not in the final layer.
 Model = Chain(
     Dense(P*K, P*K, relu),
@@ -126,21 +131,22 @@ Opt = ADAM()
 # Jointly define training data.
 Data = [(x_Train,y_Train)]
 
-# Train the model over 10,000 epochs using our shape loss, densely connected architecture with RelU, the training data,
-# and the Adam optimizer
+# Train the model over 10,000 epochs using a) our loss, b) our dense architecture with RelU, c) the training data,
+# and d) the Adam optimizer
 @epochs 10000 Flux.train!(Loss, Ps, Data, Opt)
 
-# Save the model and model weights with BSON package to avoid retraining your network.
+# Save the model and model weights with BSON.
 Weights = params(Model);
-@save "Model.bson" Model 
-@save "Weights.bson" Weights
+@save "/path/to/Landmarks/<>.bson" Model
+@save "/path/to/Landmarks/<>.bson" Weights
 
-# If you want to load the parameters back into the model to avoid retraining, define the model above and skip the training step. Then,
-@load "Model.bson" Model
-@load "Weights.bson" Weights
+# For future reference, if we want to load the parameters back into our model:
+@load "/path/to/Landmarks/<>.bson" Model
+@load "/path/to/Landmarks/<>.bson" Weights
 Flux.loadparams!(Model, Weights)
 
-# Evaluate the model on test data.
+# Evaluate the model on your test data.
 Preds_Data = collect(transpose(Model(x_Test)))
 Preds = DataFrame(Preds_Data)
-CSV.write("C:/path/to/wd/Test_Predictions.csv", Preds)
+CSV.write("/path/to/Landmarks/<>.csv", Preds)
+
